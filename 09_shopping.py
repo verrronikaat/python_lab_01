@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Есть словарь магазинов с распродажами
-
 shops = {
     'ашан': [
         {'name': 'печенье', 'price': 10.99},
@@ -24,18 +22,32 @@ shops = {
     ],
 }
 
-# Создайте словарь цен на продукты следующего вида (писать прямо в коде)
-# sweets = {
-#     'печенье': [
-#         {'shop': 'пятерочка', 'price': 9.99},
-#         {'shop': 'ашан', 'price': 10.99},
-#     ],
-#     ...
-# }
-# Указать надо только по 2 магазина с минимальными ценами
+# Шаг 1: собираем все предложения в один список
+all_offers = []   # [{'name': ..., 'shop': ..., 'price': ...}, ...]
 
-sweets = {
-    # TODO здесь ваш код
-}
+for shop_name, products in shops.items():
+    for product in products:
+        all_offers.append({
+            'name': product['name'],
+            'shop': shop_name,
+            'price': product['price'],
+        })
+
+# Шаг 2: группируем по названию товара
+sweets = {}
+
+for offer in all_offers:
+    name = offer['name']
+    if name not in sweets:
+        sweets[name] = []
+    sweets[name].append({
+        'shop': offer['shop'],
+        'price': offer['price'],
+    })
+
+# Шаг 3: сортируем по цене и оставляем 2 самых дешёвых
+for name in sweets:
+    sweets[name].sort(key=lambda item: item['price'])
+    sweets[name] = sweets[name][:2]
 
 print(sweets)
