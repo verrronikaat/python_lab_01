@@ -2,23 +2,33 @@
 # -*- coding: utf-8 -*-
 
 # В саду сорвали цветы
-garden = ('ромашка', 'роза', 'одуванчик', 'ромашка', 'гладиолус', 'подсолнух', 'роза', )
+garden = ('ромашка', 'роза', 'одуванчик', 'ромашка', 'гладиолус', 'подсолнух', 'роза')
 
 # На лугу сорвали цветы
-meadow = ('клевер', 'одуванчик', 'ромашка', 'клевер', 'мак', 'одуванчик', 'ромашка', )
+meadow = ('клевер', 'одуванчик', 'ромашка', 'клевер', 'мак', 'одуванчик', 'ромашка')
 
-# Создайте множество цветов, произрастающих в саду и на лугу
-garden_set = set(garden)
-meadow_set = set(meadow)
 
-# Выведите на консоль все виды цветов
-print('Все виды цветов:', garden_set | meadow_set)
+def analyze_flowers(garden_tuple, meadow_tuple):
+    """
+    Возвращает словарь:
+      - 'all': все виды цветов
+      - 'both': растут и там, и там
+      - 'only_garden': только в саду
+      - 'only_meadow': только на лугу
+    """
+    garden_set = set(garden_tuple)
+    meadow_set = set(meadow_tuple)
+    return {
+        'all': garden_set | meadow_set,
+        'both': garden_set & meadow_set,
+        'only_garden': garden_set - meadow_set,
+        'only_meadow': meadow_set - garden_set,
+    }
 
-# Выведите на консоль те, которые растут и там и там
-print('Растут и в саду, и на лугу:', garden_set & meadow_set)
 
-# Выведите на консоль те, которые растут в саду, но не растут на лугу
-print('Только в саду:', garden_set - meadow_set)
-
-# Выведите на консоль те, которые растут на лугу, но не растут в саду
-print('Только на лугу:', meadow_set - garden_set)
+if __name__ == '__main__':
+    result = analyze_flowers(garden, meadow)
+    print('Все виды цветов:', result['all'])
+    print('Растут и в саду, и на лугу:', result['both'])
+    print('Только в саду:', result['only_garden'])
+    print('Только на лугу:', result['only_meadow'])

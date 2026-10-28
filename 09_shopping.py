@@ -1,53 +1,57 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# Есть словарь магазинов с распродажами
+
 shops = {
     'ашан': [
         {'name': 'печенье', 'price': 10.99},
         {'name': 'конфеты', 'price': 34.99},
         {'name': 'карамель', 'price': 45.99},
-        {'name': 'пирожное', 'price': 67.99}
+        {'name': 'пирожное', 'price': 67.99},
     ],
     'пятерочка': [
         {'name': 'печенье', 'price': 9.99},
         {'name': 'конфеты', 'price': 32.99},
         {'name': 'карамель', 'price': 46.99},
-        {'name': 'пирожное', 'price': 59.99}
+        {'name': 'пирожное', 'price': 59.99},
     ],
     'магнит': [
         {'name': 'печенье', 'price': 11.99},
         {'name': 'конфеты', 'price': 30.99},
         {'name': 'карамель', 'price': 41.99},
-        {'name': 'пирожное', 'price': 62.99}
+        {'name': 'пирожное', 'price': 62.99},
     ],
 }
 
-# Шаг 1: собираем все предложения в один список
-all_offers = []   # [{'name': ..., 'shop': ..., 'price': ...}, ...]
 
-for shop_name, products in shops.items():
-    for product in products:
-        all_offers.append({
-            'name': product['name'],
-            'shop': shop_name,
-            'price': product['price'],
+def get_cheapest_shops(shops_dict):
+    """
+    Возвращает словарь: товар -> список из 2 магазинов с минимальными ценами.
+    """
+    all_offers = []
+    for shop_name, products in shops_dict.items():
+        for product in products:
+            all_offers.append({
+                'name': product['name'],
+                'shop': shop_name,
+                'price': product['price'],
+            })
+
+    sweets = {}
+    for offer in all_offers:
+        name = offer['name']
+        sweets.setdefault(name, []).append({
+            'shop': offer['shop'],
+            'price': offer['price'],
         })
 
-# Шаг 2: группируем по названию товара
-sweets = {}
+    for name in sweets:
+        sweets[name].sort(key=lambda item: item['price'])
+        sweets[name] = sweets[name][:2]
 
-for offer in all_offers:
-    name = offer['name']
-    if name not in sweets:
-        sweets[name] = []
-    sweets[name].append({
-        'shop': offer['shop'],
-        'price': offer['price'],
-    })
+    return sweets
 
-# Шаг 3: сортируем по цене и оставляем 2 самых дешёвых
-for name in sweets:
-    sweets[name].sort(key=lambda item: item['price'])
-    sweets[name] = sweets[name][:2]
 
-print(sweets)
+if __name__ == '__main__':
+    print(get_cheapest_shops(shops))

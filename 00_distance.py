@@ -9,17 +9,18 @@ sites = {
     'Paris': (480, 480),
 }
 
-# Составим словарь словарей расстояний между ними
-# расстояние на координатной сетке - ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
 
-distances = {}
+def calculate_distances(sites_dict):
+    """Возвращает словарь словарей расстояний между городами."""
+    distances = {}
+    for city_a, (x1, y1) in sites_dict.items():
+        distances[city_a] = {}
+        for city_b, (x2, y2) in sites_dict.items():
+            if city_a != city_b:
+                d = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+                distances[city_a][city_b] = d
+    return distances
 
-# Заполнение словаря
-for city_a, (x1, y1) in sites.items():
-    distances[city_a] = {}
-    for city_b, (x2, y2) in sites.items():
-        if city_a != city_b:
-            d = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
-            distances[city_a][city_b] = d
 
-print(distances)
+if __name__ == '__main__':
+    print(calculate_distances(sites))

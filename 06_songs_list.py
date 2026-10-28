@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# Песни из списка (список списков: [название, длительность])
 violator_songs_list = [
     ['World in My Eyes', 4.86],
     ['Sweetest Perfection', 4.43],
@@ -13,16 +14,7 @@ violator_songs_list = [
     ['Clean', 5.83],
 ]
 
-# Три песни из списка
-wanted_list = ['Halo', 'Enjoy the Silence', 'Clean']
-total_list = 0
-for song in violator_songs_list:
-    if song[0] in wanted_list:
-        total_list += song[1]
-
-print('Три песни звучат', round(total_list, 3), 'минут')
-
-
+# Песни из словаря (название: длительность)
 violator_songs_dict = {
     'World in My Eyes': 4.76,
     'Sweetest Perfection': 4.43,
@@ -35,10 +27,22 @@ violator_songs_dict = {
     'Clean': 5.68,
 }
 
-# Три другие песни из словаря
-wanted_dict = ['Sweetest Perfection', 'Policy of Truth', 'Blue Dress']
-total_dict = 0
-for name in wanted_dict:
-    total_dict += violator_songs_dict[name]
 
-print('А другие три песни звучат', round(total_dict, 3), 'минут')
+def get_duration_from_list(songs_list, wanted):
+    """Суммарное время песен из списка, округлённое до 3 знаков."""
+    total = sum(duration for name, duration in songs_list if name in wanted)
+    return round(total, 3)
+
+
+def get_duration_from_dict(songs_dict, wanted):
+    """Суммарное время песен из словаря, округлённое до 3 знаков."""
+    total = sum(songs_dict[name] for name in wanted)
+    return round(total, 3)
+
+
+if __name__ == '__main__':
+    wanted_list = ['Halo', 'Enjoy the Silence', 'Clean']
+    print('Три песни звучат', get_duration_from_list(violator_songs_list, wanted_list), 'минут')
+
+    wanted_dict = ['Sweetest Perfection', 'Policy of Truth', 'Blue Dress']
+    print('А другие три песни звучат', get_duration_from_dict(violator_songs_dict, wanted_dict), 'минут')

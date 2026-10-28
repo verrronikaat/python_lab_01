@@ -27,12 +27,20 @@ store = {
     ],
 }
 
-for product_name, code in goods.items():
-    total_quantity = 0
-    total_cost = 0
 
-    for batch in store[code]:
-        total_quantity += batch['quantity']
-        total_cost += batch['quantity'] * batch['price']
+def calculate_store_value(goods_dict, store_dict):
+    result = {}
+    for product_name, code in goods_dict.items():
+        batches = store_dict.get(code, [])
+        total_quantity = sum(batch['quantity'] for batch in batches)
+        total_cost = sum(batch['quantity'] * batch['price'] for batch in batches)
+        result[product_name] = {
+            'quantity': total_quantity,
+            'total_cost': total_cost,
+        }
+    return result
 
-    print(f'{product_name} - {total_quantity} шт, стоимость {total_cost} руб')
+
+if __name__ == '__main__':
+    for product, info in calculate_store_value(goods, store).items():
+        print(f"{product} - {info['quantity']} шт, стоимость {info['total_cost']} руб")

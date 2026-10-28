@@ -5,14 +5,16 @@
 
 my_favorite_movies = 'Терминатор, Пятый элемент, Аватар, Чужие, Назад в будущее'
 
-# первый фильм
-print(my_favorite_movies[:10])
 
-# последний фильм
-print(my_favorite_movies[42:])
+def get_movies_by_slices(movies_string):
+    """Возвращает кортеж: (первый, последний, второй, второй с конца)."""
+    first = movies_string[:10]
+    last = movies_string[42:]
+    second = movies_string[12:25]
+    second_from_end = movies_string[35:40]
+    return first, last, second, second_from_end
 
-# второй фильм
-print(my_favorite_movies[12:25])
 
-# второй с конца
-print(my_favorite_movies[35:40])
+if __name__ == '__main__':
+    for movie in get_movies_by_slices(my_favorite_movies):
+        print(movie)
