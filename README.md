@@ -28,7 +28,7 @@ python_lab_01/
 ├── test_lab.py             # тесты pytest
 ├── requirements.txt        # зависимости проекта
 ├── Отчет ЛР1.docx          # отчёт по лабораторной работе
-└── README.md
+└── README.md```
 
 ## Требования
 
